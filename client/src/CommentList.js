@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-export default ({ postId }) => {
-  const [comments, setComments] = useState([]);
-
-  const fetchComments = async () => {
-    const res = await axios.get(`http://localhost:4001/posts/${postId}/comments`);
-    setComments(res.data);
-  }
-
-  useEffect(() => {
-    fetchComments();
-
-  }, []);
-
+export default ({ comments }) => {
   const renderedComments = comments.map(comment => {
+    let content;
+    let fontStyle = 'normal';
+    let color = 'inherit';
+
+    if (comment.status === 'approved') {
+      content = comment.content;
+    } else if (comment.status === 'pending') {
+      content = 'This comment is awaiting moderation';
+      fontStyle = 'italic';
+      color = 'rgba(0,0,0,.6)'
+    } else if (comment.status === 'rejected') {
+      content = 'This comment has been rejected';
+      fontStyle = 'italic';
+      color = 'rgba(0,0,0,.6)';
+    }
+
     return (
-      <li key={comment.id}>{comment.content}</li>
+      <li key={comment.id} style={{ fontStyle, color }}>
+        {content}
+      </li>
     );
   });
 
