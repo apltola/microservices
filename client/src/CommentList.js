@@ -9,17 +9,17 @@ export default ({ comments }) => {
     if (comment.status === 'approved') {
       content = comment.content;
     } else if (comment.status === 'pending') {
-      content = 'This comment is awaiting moderation';
+      content = 'Comment awaiting moderation';
       fontStyle = 'italic';
       color = 'rgba(0,0,0,.6)'
     } else if (comment.status === 'rejected') {
-      content = 'This comment has been rejected';
+      content = 'Comment rejected';
       fontStyle = 'italic';
       color = 'rgba(0,0,0,.6)';
     }
 
     return (
-      <li key={comment.id} style={{ fontStyle, color }}>
+      <li key={comment.id} style={{ fontStyle, color, paddingBottom: '10px' }}>
         {content}
       </li>
     );
